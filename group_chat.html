@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat By Kaif Ansari</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #eef2f3;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 2000px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 25%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #messageList {
+            margin-top: 20px;
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .message {
+            padding: 5px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        .user1 {
+            background-color: #d4edda;
+        }
+
+        .user2 {
+            background-color: #cce5ff;
+        }
+
+        #joinChatBtn {
+            position: absolute;
+            top: 270px;
+            left: 25px;
+        }
+
+        #joinChatSection {
+            display: none;
+            margin-top: 20px;
+        }
+
+        footer {
+            background: #1a1a1a;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #00ffcc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chat By</h1>
+        <h3>Kaif S.E (Software Engineer)</h3>
+        <div id="initialSetup">
+            <input type="text" id="username" placeholder="Enter your username" />
+            <input type="password" id="pin" placeholder="Create a PIN (4 digits)" />
+            <button id="createChat">Create Chat</button>
+        </div>
+
+        <button id="joinChatBtn">Join Chat</button>
+        <div id="joinChatSection">
+            <h2>Join Chat</h2>
+            <input type="text" id="joinChatId" placeholder="Enter Chat ID" />
+            <input type="password" id="joinPin" placeholder="Enter PIN" />
+            <input type="text" id="joinUsername" placeholder="Enter your username" />
+            <button id="joinChat">Join Chat</button>
+        </div>
+
+        <div id="chatSection" style="display: none;">
+            <h2>Chat ID: <span id="chatIdDisplay"></span></h2>
+            <div id="messageInputSection" style="display: none;">
+                <textarea id="messageInput" placeholder="Type your message here..." required></textarea>
+                <button id="sendMessage">Send</button>
+                <div id="messageList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = ''; // Username of the current user
+        let chatId = '';
+        let pin = '';
+
+        document.getElementById('createChat').addEventListener('click', function() {
+            const usernameInput = document.getElementById('username').value;
+            pin = document.getElementById('pin').value;
+
+            if (usernameInput && pin.length === 4) {
+                currentUser = usernameInput;
+                chatId = Math.random().toString(36).substring(2, 10);
+                const chats = JSON.parse(localStorage.getItem('chats')) || {};
+                chats[chatId] = { pin, username: currentUser, messages: [] };
+                localStorage.setItem('chats', JSON.stringify(chats));
+                document.getElementById('chatIdDisplay').textContent = chatId;
+                document.getElementById('initialSetup').style.display = 'none';
+                document.getElementById('joinChatBtn').style.display = 'none';
+                document.getElementById('joinChatSection').style.display = 'none';
+                document.getElementById('chatSection').style.display = 'block';
+                document.getElementById('messageInputSection').style.display = 'block';
+                displayMessages();
+                startMessageRefresh();  // Start refreshing messages every second
+            } else {
+                alert("Please enter a valid username and a 4-digit PIN.");
+            }
+        });
+
+        document.getElementById('joinChatBtn').addEventListener('click', function() {
+            document.getElementById('joinChatSection').style.display = 'block';
+        });
+
+        document.getElementById('joinChat').addEventListener('click', function() {
+            const enteredChatId = document.getElementById('joinChatId').value;
+            const enteredPin = document.getElementById('joinPin').value;
+            const enteredUsername = document.getElementById('joinUsername').value;
+
+            const chats = JSON.parse(localStorage.getItem('chats')) || {};
+            const chat = chats[enteredChatId];
+
+            if (chat && chat.pin === enteredPin && enteredUsername) {
+                currentUser = enteredUsername;
+                document.getElementById('chatIdDisplay').textContent = enteredChatId;
+                document.getElementById('initialSetup').style.display = 'none';
+                document.getElementById('joinChatSection').style.display = 'none';
+                document.getElementById('chatSection').style.display = 'block';
+                document.getElementById('messageInputSection').style.display = 'block';
+                displayMessages(chat.messages);
+                startMessageRefresh();  // Start refreshing messages every second
+            } else {
+                alert("Invalid Chat ID, PIN, or username. Please try again.");
+            }
+        });
+
+        document.getElementById('sendMessage').addEventListener('click', function() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value;
+
+            if (message) {
+                const chats = JSON.parse(localStorage.getItem('chats')) || {};
+                const currentChat = chats[document.getElementById('chatIdDisplay').textContent];
+
+                if (currentChat) {
+                    currentChat.messages.push({ user: currentUser, message });
+                    localStorage.setItem('chats', JSON.stringify(chats));
+                    messageInput.value = '';
+                    displayMessages(currentChat.messages);
+                }
+            }
+        });
+
+        function displayMessages(messages = []) {
+            const messageList = document.getElementById('messageList');
+            messageList.innerHTML = '';
+
+            messages.forEach((msg) => {
+                const messageDiv = document.createElement('div');
+                messageDiv.textContent = `${msg.user}: ${msg.message}`;
+                messageDiv.className = 'message ' + (msg.user === currentUser ? 'user1' : 'user2');
+                messageList.appendChild(messageDiv);
+            });
+        }
+
+        function startMessageRefresh() {
+            setInterval(function() {
+                const chats = JSON.parse(localStorage.getItem('chats')) || {};
+                const currentChat = chats[document.getElementById('chatIdDisplay').textContent];
+                if (currentChat) {
+                    displayMessages(currentChat.messages);
+                }
+            }, 1000); // Refresh every second
+        }
+    </script>
+</body>
+</html>

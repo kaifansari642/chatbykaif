@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tips To Create Chat</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4; /* Light background */
+            color: #333; /* Dark text */
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(90deg, #4caf50, #2e7d32); /* Green gradient */
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #4caf50; /* Darker red for subheadings */
+            margin-top: 20px;
+        }
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        section {
+            background: white; /* White background for sections */
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        section:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #333;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            main {
+                padding: 10px;
+            }
+        }
+		.cta-button {
+    background: linear-gradient(90deg, #00ffcc, #00cc99);
+    border: none;
+    padding: 15px 30px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 1.2em;
+    border-radius: 50px; /* Rounded corners */
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+    text-decoration: none; /* Remove underline for the anchor */
+    color: white; /* White text */
+    box-shadow: 0 4px 15px rgba(0, 204, 153, 0.5); /* Shadow effect */
+}
+.cta-button:hover {
+    background: linear-gradient(90deg, #00cc99, #00ffcc);
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 6px 20px rgba(0, 204, 153, 0.7); /* Stronger shadow on hover */
+}
+    </style>
+</head>
+<body>
+    <header>
+	<b>This Is Made By Kaif S.E (Sowftware Engineer)</b>
+        <h1>How TO Create Chat And Join Chat</h1>
+        <p>Last Date Of Updates: <span id="date"></span></p>
+    </header>
+    
+    <main>
+        <section>
+            <h2>1. How to Create Chat</h2>
+            <p>First of all open website and fill Username like "Kaif" and create Pin like "0987" and then click on create chat.<br></p>
+        </section>
+        
+        <section>
+            <h2>2. How To Join Chat</h2>
+            <p>When You Click ON create Chat you get randomly a chat id.</p>
+        </section>
+        
+        <section>
+            <h2>3. How to join chat another person</h2>
+            <ul>
+                <li>Send Chat id and pin with Your friend.</li>
+    
+            </ul>
+        </section>
+        
+        <section>
+            <h2>4. tell Your friend this Tips</h2>
+            <p>when Your Friend Click ON join chat webpage show to fill chat id and pin and his username.</p>
+        </section>
+        
+        <section>
+            <h2>5. Connected to chat </h2>
+            <p>And Your Friend Connect To chat Automatically.</p>
+        </section>
+        
+        <section>
+            <h2>6. Enjoy Chat With Your Friends</h2>
+            <p>Enjoy Chat With Your Friends without any verification of mobile number and emails].</p>
+        </section>
+        
+        <section>
+            <h2>7. Contact Us</h2>
+            <p>If you have any questions about these Tips and Web, please contact us:</p>
+            <p><strong>Email:</strong> kaifsoftwareengineer@gmail.com</p>
+            <p><strong>Address:</strong> [India (Uttar Pradesh)]</p>
+        </section>
+		<section>
+		<div class="section">
+ <a href="javascript:void(0);" class="cta-button" onclick="StartChat()">Start Chat</a>
+</div>
+ <!-- Option 2: Using a Button with JavaScript -->
+    <!-- <button onclick="window.location.href='group_chat.html'" class="cta-button">Start Chat</button> -->    </div>
+		</section>
+    </main>
+
+   <footer>
+    <p>&copy; 2024 chatbykaif || all rights are reserved</p>
+    <p>Connect with us on <a href="#">Social Media</a></p>
+</footer>
+
+    <script>
+        // Update the effective date
+        document.getElementById("date").textContent = new Date().toLocaleDateString();
+    </script>
+	<script>
+    function StartChat() {
+        window.location.href = 'group_chat.html'; // Redirect to group_chat.html
+    }
+	</script>
+</body>
+</html>
